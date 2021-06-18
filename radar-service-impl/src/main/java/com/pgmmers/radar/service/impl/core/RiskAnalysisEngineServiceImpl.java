@@ -71,6 +71,7 @@ public class RiskAnalysisEngineServiceImpl implements RiskAnalysisEngineService 
             // 1. check
             JSONObject eventJson = jsonInfo;
 
+            // 查询数据库 获取model
             model = modelService.getModelByGuid(modelGuid);
 
             if (model == null) {
@@ -83,6 +84,7 @@ public class RiskAnalysisEngineServiceImpl implements RiskAnalysisEngineService 
                 return result;
             }
 
+            // 字段校验，就是对参数的类型 以及长度 等进行校验。
             if (model.getFieldValidate()) {
                 Map<String, Object> vldMap = validateService.validate(model.getId(), eventJson);
                 if (vldMap.size() > 0) {
@@ -123,7 +125,7 @@ public class RiskAnalysisEngineServiceImpl implements RiskAnalysisEngineService 
         // 缓存分析结果
         cacheService.saveAntiFraudResult(modelGuid, reqId, result);
 
-        // 保存事件信息和分析结果用于后续分析
+        // 保存事件信息和分析结果用于后续分析   保存到ES
         riskResultService.sendResult(modelGuid, reqId, JSON.toJSONString(context));
         // 返回分析结果
         return result;

@@ -15,6 +15,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.elasticsearch.rest.RestClientAutoConfiguration;
 import tk.mybatis.spring.annotation.MapperScan;
 
+/**
+ *
+ * 引擎服务入口
+ *
+ */
 @SpringBootApplication(exclude = {RestClientAutoConfiguration.class})
 @MapperScan("com.pgmmers.radar.mapper")
 public class EngineApplication {
